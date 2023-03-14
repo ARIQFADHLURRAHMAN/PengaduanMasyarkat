@@ -46,7 +46,6 @@
                     {{ Session::get('pesan') }}
                </div>
                @endif
-                    <a href="{{ route('pekat.index') }}" class="btn btn-warning text-white mt-3" style="width: 100%">Kembali ke Halaman Utama</a>
                </div>
           </div>
      </div>

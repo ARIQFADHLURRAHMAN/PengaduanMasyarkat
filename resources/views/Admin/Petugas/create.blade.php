@@ -52,14 +52,28 @@
                          <label for="level">Level</label>
                          <div  class="input-group mt-3">
                               <select name="level" id="level" class="custom-select">
-                                   <option value="petugas" selected>Pilih Level (Default Petugas)</option>
+                                   {{-- <option value="petugas" selected>Pilih Level (Default Petugas)</option> --}}
                                    <option value="admin">Admin</option>
-                                   <option value="petuagas">Petugas</option>
+                                   <option value="petuagas"  selected>Petugas</option>
                               </select>
                          </div>
                     </div>
                     <button type="submit" class="btn btn-success">Simpan</button>
                     </form>
+               </div>
+               <div class="col-lg-6 col-12">
+                    @if (Session::has('username'))
+                         <div class="alert alert-danger">
+                              {{ Session::get('username' )}}
+                         </div>
+                    @endif
+                    @if ($errors->any())
+                         @foreach ($errors->all() as $error)
+                              <div class="alert alert-danger">
+                                   {{ $error }}
+                              </div>
+                         @endforeach
+                    @endif
                </div>
           </div>
 @endsection
