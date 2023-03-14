@@ -15,10 +15,10 @@
                          <form action="{{ route('laporan.getLaporan') }}" method="POST">
                               @csrf
                               <div class="form-group">
-                                   <input type="text" name="form" class="form-control" placeholder="Tanggal Awal" onfocus="(this.type='date')" onfocus="(this.type='text')">
+                                   <input type="text" name="from" class="form-control" placeholder="Tanggal Awal" onfocus="(this.type='date')" onfocusout="(this.type='text')">
                               </div>
                               <div class="form-group">
-                                   <input type="text" name="to" class="form-control" placeholder="Tanggal Akhir" onfocus="(this.type='date')" onfocus="(this.type='text')">
+                                   <input type="text" name="to" class="form-control" placeholder="Tanggal Akhir" onfocus="(this.type='date')" onfocusout="(this.type='text')">
                               </div>
                               <button type="submit" class="btn btn-success" style="width: 100%">Cari laporan</button>
                          </form>
