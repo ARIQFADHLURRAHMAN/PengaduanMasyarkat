@@ -13,7 +13,7 @@
      @csrf
 
      <div class="d-flex justify-content-end">
-         <button type="submit" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i> Generate Report</button>
+          <button type="submit" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i> Generate Report</button>
      </div>
  </form>
 <table id="example" class="display" style="width:100%">
