@@ -24,30 +24,45 @@ use App\Http\Controllers\Admin\MasyarakatController;
 
 // Masyarakat
 Route::get('/', [UserController::class, 'index'])->name('pekat.index');
-Route::post('/login/auth', [UserController::class, 'login'])->name('pekat.login');
-Route::get('/register', [UserController::class, 'formRegister'])->name('pekat.formRegister');
-Route::post('/register/auth', [UserController::class, 'register'])->name('pekat.register');
-Route::post('/store', [UserController::class, 'storePengaduan'])->name('pekat.store');
-Route::get('/laporan/{siapa?}', [UserController::class, 'laporan'])->name('pekat.laporan');
-Route::get('/logout', [UserController::class, 'logout'])->name('pekat.logout');
+
+Route::middleware(['IsMasyarakat'])->group(function () {
+    Route::post('/store', [UserController::class, 'storePengaduan'])->name('pekat.store');
+    Route::get('/laporan/{siapa?}', [UserController::class, 'laporan'])->name('pekat.laporan');
+    Route::get('/logout', [UserController::class, 'logout'])->name('pekat.logout');
+});
+
+Route::middleware(['guest'])->group(function () {
+    Route::post('/login/auth', [UserController::class, 'login'])->name('pekat.login');
+    Route::get('/register', [UserController::class, 'formRegister'])->name('pekat.formRegister');
+    Route::post('/register/auth', [UserController::class, 'register'])->name('pekat.register');
+});
 
 Route::prefix('admin')->group(function () {
-    Route::get('/',[AdminController::class, 'formlogin'])->name('admin.formlogin');
-    Route::post('/login',[AdminController::class, 'login'])->name('admin.login');
-    Route::get('/logout',[AdminController::class, 'logout'])->name('admin.logout');
+        Route::middleware(['IsAdmin'])->group(function () {
+        // Petugas
+        Route::resource('petugas', PetugasController::class);
+        // Masyarakat
+        Route::resource('masyarakat', MasyarakatController::class);
+        // Laporan
+        Route::get('laporan', [LaporanController::class, 'index'])->name('laporan.index');
+    });
 
-    Route::get('/dashboard',[DashboardController::class, 'index'])->name('dashboard.index');
+    Route::middleware(['IsPetugas'])->group(function () {
+         // dashboard
+         Route::get('/dashboard',[DashboardController::class, 'index'])->name('dashboard.index');
+          // Pengaduan
+        Route::resource('pengaduan', PengaduanController::class);
+         // Tanggapan
+         Route::post('tanggapan/createOrUpdate', [TanggapanController::class, 'createOrUpdate'])->name('tanggapan.createOrUpdate');
+        //  logout
+        Route::get('/logout',[AdminController::class, 'logout'])->name('admin.logout');
+    });
 
-    // Pengaduan
-    Route::resource('pengaduan', PengaduanController::class);
-    // Petugas
-    Route::resource('petugas', PetugasController::class);
-    // Masyarakat
-    Route::resource('masyarakat', MasyarakatController::class);
-    // Laporan
-    Route::get('laporan', [LaporanController::class, 'index'])->name('laporan.index');
-    // Tanggapan
-    Route::post('tanggapan/createOrUpdate', [TanggapanController::class, 'createOrUpdate'])->name('tanggapan.createOrUpdate');
+    Route::middleware(['Isguest'])->group(function () {
+        Route::get('/',[AdminController::class, 'formlogin'])->name('admin.formlogin');
+        Route::post('/login',[AdminController::class, 'login'])->name('admin.login');
+    });
+    
     // export pdf
     Route::post('/export-pdf', [PDFController::class, 'exportpdf'])->name('export.pdf');
 });

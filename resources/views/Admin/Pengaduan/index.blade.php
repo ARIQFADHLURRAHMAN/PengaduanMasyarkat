@@ -8,7 +8,6 @@
 
 @section('judul', 'Halaman Pengaduan')
 
-
 @section('content')
 <form method="POST" action="{{ route('export.pdf') }}">
      @csrf

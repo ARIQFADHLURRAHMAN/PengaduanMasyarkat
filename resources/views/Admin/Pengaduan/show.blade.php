@@ -21,7 +21,6 @@
                border: 1px solid #757d6c;
           }
      </style>
-
 @endsection
 
 @section('header')

@@ -6,7 +6,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class IsPetugas
+class IsGuest
 {
     /**
      * Handle an incoming request.
@@ -17,13 +17,10 @@ class IsPetugas
      */
     public function handle(Request $request, Closure $next)
     {
-        if (Auth::guard('admin')->check()){
-            if (Auth::guard('admin')->user()->level == 'petugas');
-            return $next($request);
-        }elseif (Auth::guard('admin')->user()->level == 'admin') {
+        if (Auth::guard('admin')->check()) {
             return $next($request);
         }
 
-        return redirect()->route('admin.formlogin');
+        return redirect()->route('dashboard.index');
     }
 }
